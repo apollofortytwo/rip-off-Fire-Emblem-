@@ -14,7 +14,7 @@ public class Main implements ApplicationListener {
 	public static Stage stage;
 
 	CameraController controller;
-	
+
 	public OrthographicCamera cam;
 	ShapeRenderer sr;
 	TileManager tm;
@@ -23,9 +23,10 @@ public class Main implements ApplicationListener {
 
 	@Override
 	public void create() {
-		
+
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, 800, 400);
+
 		cam.position.set(cam.viewportWidth / 2, cam.viewportHeight / 2, 0);
 
 		stage = new Stage();
@@ -33,19 +34,23 @@ public class Main implements ApplicationListener {
 		container = new VerticalGroup().reverse();
 		container.setPosition(0, Gdx.graphics.getHeight());
 		container.left();
-		
-		
+
 		stage.addActor(container);
-		
+
 		mm = new MapManager(cam);
-		for(int i = 0; i < 20; i ++){
+
+		for (int i = 0; i < 20; i++) {
 			mm.addEntity(i, 0);
 		}
 		
+		for (int i = 0; i < 20; i++) {
+			mm.addObstacle(i,5);
+		}
+
 		controller = new CameraController(cam);
-		
+
 		Gdx.input.setInputProcessor(controller);
-		
+
 		sr = new ShapeRenderer();
 	}
 
@@ -59,20 +64,20 @@ public class Main implements ApplicationListener {
 	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+
 		sr.setProjectionMatrix(cam.combined);
-	
+
 		sr.setAutoShapeType(true);
+
 		sr.begin();
 		mm.renderOutline(sr);
-		
+
 		sr.end();
 
 		stage.draw();
-		
+
 		update();
 	}
-
 
 	@Override
 	public void dispose() {
@@ -81,7 +86,7 @@ public class Main implements ApplicationListener {
 
 	@Override
 	public void resize(int width, int height) {
-		
+
 	}
 
 	@Override
@@ -93,7 +98,5 @@ public class Main implements ApplicationListener {
 	public void resume() {
 
 	}
-	
-	
-	
+
 }

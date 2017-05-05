@@ -29,8 +29,9 @@ public class Tile {
 	}
 
 	public void renderOutline(ShapeRenderer sr) {
+		
 		sr.setColor(color);
 		sr.rect(x, y, bounds.width, bounds.height);
-		sr.setColor(Color.WHITE);
+		
 	}
 }

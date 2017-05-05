@@ -16,6 +16,7 @@ public class Cursor {
 	Vector2 wPos;
 	private StageText positionText;
 	private StageText wPositionText;
+	TileOverlayManager tom;
 
 	/**
 	 * 
@@ -24,13 +25,14 @@ public class Cursor {
 	 * @param y
 	 *            Y position that the cursor initially appears on
 	 */
-	Cursor(int x, int y) {
+	Cursor(int x, int y, TileManager tm) {
 		this.x = x;
 		this.y = y;
-		wPos = worldPosition(x, y);
+		wPos = new WorldPosition(x, y);
 		wPositionText = new StageText("");
 		positionText = new StageText("");
-
+		tom = new TileOverlayManager(tm);
+		tom.initMap();
 		Main.container.addActor(wPositionText.label);
 		Main.container.addActor(positionText.label);
 	}
@@ -44,7 +46,7 @@ public class Cursor {
 	 * held down to move continuously
 	 */
 	public void update() {
-		wPos = worldPosition(x, y);
+		wPos = new WorldPosition(x, y);
 		frames += Gdx.graphics.getDeltaTime();
 
 		if (frames > 0.1f) {
@@ -91,27 +93,15 @@ public class Cursor {
 	 *            vertical grid position
 	 */
 	public void moveCursor(int x, int y) {
-		System.out.println(wPos);
 		if (x >= 0 && y >= 0 && x < TileManager.map.length && y < TileManager.map[1].length) {
+			tom.map[this.x][this.y].color = Color.CLEAR;
 			this.x = x;
 			this.y = y;
+			
 		}
-		System.out.println(new Vector2(this.x, this.y));
 	}
 
-	/**
-	 * The cursor has two different kinds of positions the position that the
-	 * cursor exist on a grid the position that the cursor exist in the world
-	 * 
-	 * @param x
-	 *            horizontal grid position
-	 * @param y
-	 *            vertical grid position
-	 * @return the position that the cursor exist in the world
-	 */
-	public Vector2 worldPosition(int x, int y) {
-		return new Vector2(x * Tile.WIDTH, y * Tile.HEIGHT);
-	}
+	
 
 	/**
 	 * renders the box frame of the cursor
@@ -119,8 +109,7 @@ public class Cursor {
 	 * @param sr
 	 */
 	public void renderOutline(ShapeRenderer sr) {
-		sr.setColor(Color.CYAN);
-		sr.rect(x * Tile.WIDTH, y * Tile.HEIGHT, Tile.WIDTH, Tile.HEIGHT);
-		sr.setColor(Color.WHITE);
+		tom.map[x][y].color = Color.BLUE;
+		tom.renderBlanket(sr);
 	}
 }

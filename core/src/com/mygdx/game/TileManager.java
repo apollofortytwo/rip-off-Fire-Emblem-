@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
@@ -12,13 +11,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public class TileManager {
 
-	BitmapFont font = new BitmapFont();
-	SpriteBatch batch = new SpriteBatch();
-	
+
 	public static Tile[][] map;
-	Tile SelectedTile = null;
 	int width, height;
-	
+	int padding = 5;
 	
 	/**
 	 * 
@@ -38,7 +34,7 @@ public class TileManager {
 	public void initMap() {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				map[x][y] = new Tile(x * Tile.WIDTH, y * Tile.HEIGHT);
+				map[x][y] = new Tile(x * (Tile.WIDTH + padding), y * (Tile.HEIGHT + padding));
 			}
 		}
 	}
@@ -54,10 +50,6 @@ public class TileManager {
 				map[x][y].renderOutline(sr);
 			}
 		}
-
-		batch.begin();
-		font.draw(batch, "hellp", 50, 50);
-		batch.end();
 	}
 
 	/**
@@ -84,6 +76,15 @@ public class TileManager {
 //			
 //		}
 	
+	}
+
+	public void resetColour() {
+		for(Tile[] x: map){
+			for(Tile y: x){
+				y.color = Color.WHITE;
+			}
+		}
+		
 	}
 	
 }

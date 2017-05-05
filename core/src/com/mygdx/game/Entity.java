@@ -1,40 +1,44 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Entity {
-	int x, y;
-	Vector2 wPos;
-	int width, height;
+
+	public int x, y;
+	public int width, height;
+	public Rectangle bounds;
+	public Vector2 wPos;
 	public Color color;
+	public int move = 3;
 
 	public Entity(int x, int y) {
 		this.x = x;
 		this.y = y;
-
-		wPos = worldPosition(x, y);
-		width = 50;
-		height = 20;
+		bounds = new Rectangle(x, y, Tile.WIDTH, Tile.HEIGHT);
 		color = Color.WHITE;
+		update();
 	}
 
 	public void update() {
-		wPos = worldPosition(x, y);
+		wPos = new WorldPosition(x, y);
 	}
 
-	public void renderSprite() {
-		// TODO
+	public void move(int x, int y) {
+		this.x = x;
+		this.y = y;
+
 	}
 
-	public Vector2 worldPosition(int x, int y) {
-		return new Vector2(Tile.WIDTH * x, Tile.HEIGHT * y);
+	public void renderSprites(SpriteBatch batch) {
+
 	}
 
-	public void renderOutline(ShapeRenderer sr) {
+	public void renderShapes(ShapeRenderer sr) {
 		sr.setColor(color);
-		sr.rect(wPos.x + (Tile.WIDTH) / 4, wPos.y + (Tile.HEIGHT) / 4, (Tile.WIDTH) / 2,
-				(Tile.WIDTH) / 2);
+		sr.rect(wPos.x + (Tile.WIDTH) / 4, wPos.y + (Tile.HEIGHT) / 4, (Tile.WIDTH) / 2, (Tile.WIDTH) / 2);
 	}
 }
