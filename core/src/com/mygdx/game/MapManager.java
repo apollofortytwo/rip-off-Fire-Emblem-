@@ -29,7 +29,7 @@ public class MapManager {
 
 	MapManager(OrthographicCamera cam) {
 		
-		tm = new TileManager(25, 20);
+		tm = new TileManager(200, 200);
 		tm.initMap();
 		
 		
@@ -73,7 +73,6 @@ public class MapManager {
 		if (lockOn) {
 			Vector2 desired = cursor.wPos;
 			desired.sub(cam.position.x, cam.position.y);
-			//cam.translate(desired);
 
 		}
 		tm.update();
@@ -83,22 +82,27 @@ public class MapManager {
 		if (Gdx.input.isKeyJustPressed(Keys.L)) {
 			lockOn = !lockOn;
 		}
-		
+		if(lockOn){
+			Vector2 desire = cursor.wPos;
+			desire.sub(cam.position.x, cam.position.y);
+			cam.translate(desire);
+		}
 		em.tom.resetColour();
 		
 		
 		Entity look = em.getEntity(cursor.x, cursor.y);
 		if(look != null && look != entityFocus){
 			ArrayList<Vector2> cords = MoveSpread.moves(look.x, look.y, look.move);
-			
 			for (Vector2 position : cords) {
-				if (position.x >= 0 && position.y >= 0) {
+				System.out.println(position);
+				if (position.x >= 0 && position.y >= 0 && position.y < tm.height && position.x < tm.width) {
 					em.tom.map[(int) position.x][(int) position.y].color = Color.ROYAL;
 				}
 			}
 		}
 
-
+		
+		
 		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 			
 			if(entityFocus != null){
@@ -123,7 +127,7 @@ public class MapManager {
 					ArrayList<Vector2> cords = MoveSpread.moves(entity.x, entity.y, entity.move);
 					
 					for (Vector2 position : cords) {
-						if (position.x >= 0 && position.y >= 0) {
+						if (position.x >= 0 && position.y >= 0 && position.y < tm.height && position.x < tm.width) {
 							tom.map[(int) position.x][(int) position.y].color = Color.RED;
 						}
 					}
@@ -134,10 +138,30 @@ public class MapManager {
 			}
 			
 		}
+		
+		
+		if(Gdx.input.isKeyJustPressed(Keys.A)){
+			for(Entity en: em.enList){
+				ArrayList<Vector2> cords = MoveSpread.moves(en.x, en.y, en.move);
+				for (Vector2 position : cords) {
+					System.out.println(position);
+					if (position.x >= 0 && position.y >= 0 && position.y < tm.height && position.x < tm.width) {
+						em.tom.map[(int) position.x][(int) position.y].color = Color.ROYAL;
+					}
+				}
+			}
+		}
 
 	}
+	
+	
 
 	public void addEntity(int x, int y) {
+		for(Entity en: em.enList){
+			if(en.x == x && en.y == y){
+				return;	
+			}
+		}
 		em.addEntity(new Entity(x, y));
 	}
 

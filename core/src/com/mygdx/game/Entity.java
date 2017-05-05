@@ -13,7 +13,7 @@ public class Entity {
 	public Rectangle bounds;
 	public Vector2 wPos;
 	public Color color;
-	public int move = 3;
+	public int move = 8;
 
 	public Entity(int x, int y) {
 		this.x = x;

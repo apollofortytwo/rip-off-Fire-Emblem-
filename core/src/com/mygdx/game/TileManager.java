@@ -14,7 +14,7 @@ public class TileManager {
 
 	public static Tile[][] map;
 	int width, height;
-	int padding = 5;
+	int padding = 2;
 	
 	/**
 	 * 
@@ -81,7 +81,7 @@ public class TileManager {
 	public void resetColour() {
 		for(Tile[] x: map){
 			for(Tile y: x){
-				y.color = Color.WHITE;
+				y.color = Color.LIGHT_GRAY;
 			}
 		}
 		

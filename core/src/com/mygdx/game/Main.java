@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import java.util.Random;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -39,12 +41,13 @@ public class Main implements ApplicationListener {
 
 		mm = new MapManager(cam);
 
-		for (int i = 0; i < 20; i++) {
-			mm.addEntity(i, 0);
+		for (int i = 0; i < 500; i++) {
+			Random random = new Random();
+			mm.addEntity(random.nextInt(200), random.nextInt(200));
 		}
-		
+
 		for (int i = 0; i < 20; i++) {
-			mm.addObstacle(i,5);
+			mm.addObstacle(i, 5);
 		}
 
 		controller = new CameraController(cam);

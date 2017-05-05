@@ -14,8 +14,6 @@ public class ObstacleManager {
 
 	public void addObstacle(int x, int y) {
 		obstacleMap[x][y] = new Obstacle(x,y);
-		
-
 	}
 
 	public void renderShape(ShapeRenderer sr) {
