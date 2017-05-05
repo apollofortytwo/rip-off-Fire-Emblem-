@@ -21,7 +21,7 @@ public class Tile {
 	}
 
 	public void update() {
-
+		//TODO
 	}
 
 	public void renderSprite() {
