@@ -3,33 +3,31 @@ package com.mygdx.game;
 
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 
-public class Tile {
+public class Tile extends Entity {
 	public static final int WIDTH = 64;
 	public static final int HEIGHT = 64;
-	int x, y;
-	Rectangle bounds;
 	Color color = Color.WHITE;
 	
 	
 	Tile(int x, int y) {
-		this.x = x;
-		this.y = y;
-		bounds = new Rectangle(x, y, WIDTH, HEIGHT);
+		super(x,y);
 	}
 
 	public void update() {
-		//TODO
-	}
-
-	public void renderSprite() {
-		// TODO
-	}
-
-	public void renderOutline(ShapeRenderer sr) {
 		
+	}
+
+	@Override
+	public void renderSprites(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void renderShapes(ShapeRenderer sr) {
 		sr.setColor(color);
 		sr.rect(x, y, bounds.width, bounds.height);
 		

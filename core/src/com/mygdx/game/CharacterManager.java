@@ -4,34 +4,34 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class EntityManager {
+public class CharacterManager {
 
-	ArrayList<Entity> enList = new ArrayList<Entity>();
+	ArrayList<Character> list = new ArrayList<Character>();
 	TileOverlayManager tom;
 	
-	public EntityManager(TileManager tm) {
+	public CharacterManager(TileManager tm) {
 		tom = new TileOverlayManager(tm);
 		tom.initMap();
 	}
 	
-	public Entity getEntity(int x, int y){
-		for(Entity entity: enList){
-			if(entity.x == x && entity.y == y){
-				return entity;
+	public Character getCharacter(int x, int y){
+		for(Character character: list){
+			if(character.x == x && character.y == y){
+				return character;
 			}
 		}
 		return null;
 	}
 
 	public void update() {
-		for (Entity entity : enList) {
+		for (Entity entity : list) {
 			entity.update();
 		}
 	}
 	
 	public Entity[][] getMap(){
 		Entity[][] map = new Entity[tom.row][tom.col];
-		for(Entity en: enList){
+		for(Entity en: list){
 			map[en.x][en.y] = en;
 		}
 		return map;
@@ -42,15 +42,19 @@ public class EntityManager {
 	}
 
 	public void renderOutline(ShapeRenderer sr) {
-		for (Entity entity : enList) {
+
+	}
+
+	public void addCharacter(Character character) {
+		list.add(character);
+	}
+
+	public void renderShape(ShapeRenderer sr) {
+		for (Entity entity : list) {
 			entity.renderShapes(sr);
 		}
 		
-		tom.renderBlanket(sr);
-	}
-
-	public void addEntity(Entity entity) {
-		enList.add(entity);
+		tom.renderShape(sr);
 	}
 
 }

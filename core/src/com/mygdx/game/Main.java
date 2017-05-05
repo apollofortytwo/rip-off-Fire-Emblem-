@@ -43,7 +43,7 @@ public class Main implements ApplicationListener {
 
 		for (int i = 0; i < 500; i++) {
 			Random random = new Random();
-			mm.addEntity(random.nextInt(200), random.nextInt(200));
+			mm.addCharacter(random.nextInt(200), random.nextInt(200));
 		}
 
 		for (int i = 0; i < 20; i++) {

@@ -93,7 +93,7 @@ public class Cursor {
 	 *            vertical grid position
 	 */
 	public void moveCursor(int x, int y) {
-		if (x >= 0 && y >= 0 && x < TileManager.map.length && y < TileManager.map[1].length) {
+		if (x >= 0 && y >= 0 && x < TileManager.ROW && y < TileManager.COL) {
 			tom.map[this.x][this.y].color = Color.CLEAR;
 			this.x = x;
 			this.y = y;
@@ -108,8 +108,8 @@ public class Cursor {
 	 * the colour of the cursor is cyan
 	 * @param sr
 	 */
-	public void renderOutline(ShapeRenderer sr) {
+	public void renderShape(ShapeRenderer sr) {
 		tom.map[x][y].color = Color.BLUE;
-		tom.renderBlanket(sr);
+		tom.renderShape(sr);
 	}
 }

@@ -18,6 +18,5 @@ public class WorldPosition extends Vector2{
 		Tile tile = TileManager.map[x][y];
 		this.x = tile.x;
 		this.y = tile.y;
-		
 	}
 }

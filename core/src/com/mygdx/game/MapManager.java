@@ -18,7 +18,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class MapManager {
 	OrthographicCamera cam;
-	EntityManager em;
+	CharacterManager cm;
 	TileManager tm;
 	TileOverlayManager tom;
 	ObstacleManager omb;
@@ -29,16 +29,14 @@ public class MapManager {
 
 	MapManager(OrthographicCamera cam) {
 		
-		tm = new TileManager(200, 200);
-		tm.initMap();
+		tm = new TileManager();
 		
-		
-		em = new EntityManager(tm);
+		cm = new CharacterManager(tm);
 		
 		tom = new TileOverlayManager(tm);
 		tom.initMap();
 		
-		omb = new ObstacleManager(tm);
+		omb = new ObstacleManager();
 		
 		this.cam = cam;
 		cursor = new Cursor(0, 0, tm);
@@ -53,15 +51,15 @@ public class MapManager {
 
 	public void renderOutline(ShapeRenderer sr) {
 		
-		em.renderOutline(sr);
-		cursor.renderOutline(sr);
+		cm.renderShape(sr);
+		cursor.renderShape(sr);
 		cursor.renderText();
 
-		tm.renderOutline(sr);
+		tm.renderShape(sr);
 
 		tm.resetColour();
 		
-		tom.renderBlanket(sr);
+		tom.renderShape(sr);
 		
 		omb.renderShape(sr);
 
@@ -76,7 +74,7 @@ public class MapManager {
 
 		}
 		tm.update();
-		em.update();
+		cm.update();
 		cursor.update();
 
 		if (Gdx.input.isKeyJustPressed(Keys.L)) {
@@ -87,16 +85,15 @@ public class MapManager {
 			desire.sub(cam.position.x, cam.position.y);
 			cam.translate(desire);
 		}
-		em.tom.resetColour();
+		cm.tom.resetColour();
 		
 		
-		Entity look = em.getEntity(cursor.x, cursor.y);
+		Character look = cm.getCharacter(cursor.x, cursor.y);
 		if(look != null && look != entityFocus){
 			ArrayList<Vector2> cords = MoveSpread.moves(look.x, look.y, look.move);
 			for (Vector2 position : cords) {
-				System.out.println(position);
-				if (position.x >= 0 && position.y >= 0 && position.y < tm.height && position.x < tm.width) {
-					em.tom.map[(int) position.x][(int) position.y].color = Color.ROYAL;
+				if (position.x >= 0 && position.y >= 0 && position.y < tm.COL && position.x < tm.ROW) {
+					cm.tom.map[(int) position.x][(int) position.y].color = Color.ROYAL;
 				}
 			}
 		}
@@ -106,9 +103,8 @@ public class MapManager {
 		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 			
 			if(entityFocus != null){
-				System.out.println("focused");
 				if(tom.map[(int) cursor.x][(int) cursor.y].color == Color.RED){
-					if(em.getEntity(cursor.x, cursor.y) == null){
+					if(cm.getCharacter(cursor.x, cursor.y) == null){
 						entityFocus.move(cursor.x, cursor.y);
 						entityFocus = null;
 							
@@ -119,15 +115,15 @@ public class MapManager {
 
 			tom.resetColour();
 			
-			for (Entity entity : em.enList) {
-				if (entity.x == cursor.x && entity.y == cursor.y) {
+			for (Character c : cm.list) {
+				if (c.x == cursor.x && c.y == cursor.y) {
 					
-					entityFocus = entity;
+					entityFocus = c;
 					
-					ArrayList<Vector2> cords = MoveSpread.moves(entity.x, entity.y, entity.move);
+					ArrayList<Vector2> cords = MoveSpread.moves(c.x, c.y, c.move);
 					
 					for (Vector2 position : cords) {
-						if (position.x >= 0 && position.y >= 0 && position.y < tm.height && position.x < tm.width) {
+						if (position.x >= 0 && position.y >= 0 && position.y < tm.COL && position.x < tm.ROW) {
 							tom.map[(int) position.x][(int) position.y].color = Color.RED;
 						}
 					}
@@ -141,12 +137,12 @@ public class MapManager {
 		
 		
 		if(Gdx.input.isKeyJustPressed(Keys.A)){
-			for(Entity en: em.enList){
-				ArrayList<Vector2> cords = MoveSpread.moves(en.x, en.y, en.move);
+			for(Character c: cm.list){
+				ArrayList<Vector2> cords = MoveSpread.moves(c.x, c.y, c.move);
 				for (Vector2 position : cords) {
-					System.out.println(position);
-					if (position.x >= 0 && position.y >= 0 && position.y < tm.height && position.x < tm.width) {
-						em.tom.map[(int) position.x][(int) position.y].color = Color.ROYAL;
+
+					if (position.x >= 0 && position.y >= 0 && position.y < tm.COL && position.x < tm.ROW) {
+						cm.tom.map[(int) position.x][(int) position.y].color = Color.ROYAL;
 					}
 				}
 			}
@@ -156,13 +152,13 @@ public class MapManager {
 	
 	
 
-	public void addEntity(int x, int y) {
-		for(Entity en: em.enList){
+	public void addCharacter(int x, int y) {
+		for(Entity en: cm.list){
 			if(en.x == x && en.y == y){
 				return;	
 			}
 		}
-		em.addEntity(new Entity(x, y));
+		cm.addCharacter(new Character(x, y));
 	}
 
 	public void addObstacle(int x, int y) {

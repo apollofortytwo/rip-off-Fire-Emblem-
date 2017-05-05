@@ -4,11 +4,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class ObstacleManager {
 	Obstacle[][] obstacleMap;
+	
 	int row, col;
 
-	ObstacleManager(TileManager tm) {
-		row = tm.width;
-		col = tm.height;
+	ObstacleManager() {
+		row = TileManager.ROW;
+		col = TileManager.COL;
 		obstacleMap = new Obstacle[row][col];
 	}
 
