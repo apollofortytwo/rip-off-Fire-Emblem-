@@ -31,8 +31,7 @@ public class Cursor {
 		wPos = new WorldPosition(x, y);
 		wPositionText = new StageText("");
 		positionText = new StageText("");
-		tom = new TileOverlayManager(tm);
-		tom.initMap();
+		tom = new TileOverlayManager();
 		Main.container.addActor(wPositionText.label);
 		Main.container.addActor(positionText.label);
 	}

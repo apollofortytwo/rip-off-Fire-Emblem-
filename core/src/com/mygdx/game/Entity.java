@@ -17,7 +17,6 @@ public abstract class Entity {
 	public Entity(int x, int y) {
 		this.x = x;
 		this.y = y;
-		bounds = new Rectangle(x, y, Tile.WIDTH, Tile.HEIGHT);
 		color = Color.WHITE;
 	}
 

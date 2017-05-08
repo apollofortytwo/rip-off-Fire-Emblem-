@@ -13,9 +13,10 @@ public class WorldPosition extends Vector2{
 	 *            vertical grid position
 	 * @return the position that the cursor exist in the world
 	 */
+	public static TileManager tm;
 	
 	WorldPosition(int x, int y) {
-		Tile tile = TileManager.map[x][y];
+		Tile tile = tm.map[x][y];
 		this.x = tile.x;
 		this.y = tile.y;
 	}

@@ -9,24 +9,22 @@ public class TileOverlayManager {
 
 	public TileOverlay[][] map;
 	int row, col;
-	TileManager tm;
 	
-	TileOverlayManager(TileManager tm){
-		this.tm = tm;
-		row = tm.ROW;
-		col = tm.COL;
+	TileOverlayManager(){
+		row = TileManager.ROW;
+		col = TileManager.COL;
 		map = new TileOverlay[row][col];
+		initMap();
 	}
 	
 	public void initMap() {
-		for (int x = 0; x < tm.ROW; x++) {
-			for (int y = 0; y < tm.COL; y++) {
+		map = new TileOverlay[row][col];
+		for (int x = 0; x < row; x++) {
+			for (int y = 0; y < col; y++) {
 				map[x][y] = new TileOverlay(x,y);
 			}
 		}
 	}
-	
-	
 	
 	public void resetColour() {
 		for(TileOverlay[] x: map){
@@ -50,9 +48,18 @@ public class TileOverlayManager {
 				y.render(sr);
 			}
 		}
+		
 		sr.end();
 		sr.begin(ShapeRenderer.ShapeType.Line);
 		
 		Gdx.gl.glDisable(GL20.GL_BLEND);
+	}
+	
+	public void update(){
+		for(TileOverlay[] x: map){
+			for(TileOverlay y: x){
+				y.update();
+			}
+		}
 	}
 }

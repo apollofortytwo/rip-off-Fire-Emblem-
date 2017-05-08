@@ -31,10 +31,11 @@ public class MapManager {
 		
 		tm = new TileManager();
 		
-		cm = new CharacterManager(tm);
+		WorldPosition.tm = tm;
 		
-		tom = new TileOverlayManager(tm);
-		tom.initMap();
+		cm = new CharacterManager();
+		
+		tom = new TileOverlayManager();
 		
 		omb = new ObstacleManager();
 		
@@ -76,6 +77,7 @@ public class MapManager {
 		tm.update();
 		cm.update();
 		cursor.update();
+		omb.update();
 
 		if (Gdx.input.isKeyJustPressed(Keys.L)) {
 			lockOn = !lockOn;
@@ -88,7 +90,7 @@ public class MapManager {
 		cm.tom.resetColour();
 		
 		
-		Character look = cm.getCharacter(cursor.x, cursor.y);
+		Character look = cm.map[cursor.x][cursor.y];
 		if(look != null && look != entityFocus){
 			ArrayList<Vector2> cords = MoveSpread.moves(look.x, look.y, look.move);
 			for (Vector2 position : cords) {
@@ -104,7 +106,7 @@ public class MapManager {
 			
 			if(entityFocus != null){
 				if(tom.map[(int) cursor.x][(int) cursor.y].color == Color.RED){
-					if(cm.getCharacter(cursor.x, cursor.y) == null){
+					if(cm.map[cursor.x][cursor.y] == null){
 						entityFocus.move(cursor.x, cursor.y);
 						entityFocus = null;
 							

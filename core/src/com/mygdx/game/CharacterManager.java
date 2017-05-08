@@ -1,49 +1,29 @@
 package com.mygdx.game;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class CharacterManager {
-
-	ArrayList<Character> list = new ArrayList<Character>();
+public class CharacterManager extends Manager<Character>{
 	TileOverlayManager tom;
 	
-	public CharacterManager(TileManager tm) {
-		tom = new TileOverlayManager(tm);
-		tom.initMap();
+	public CharacterManager() {
+		super();
+		tom = new TileOverlayManager();
 	}
 	
-	public Character getCharacter(int x, int y){
-		for(Character character: list){
-			if(character.x == x && character.y == y){
-				return character;
-			}
-		}
-		return null;
-	}
-
 	public void update() {
 		for (Entity entity : list) {
 			entity.update();
 		}
 	}
 	
-	public Entity[][] getMap(){
-		Entity[][] map = new Entity[tom.row][tom.col];
-		for(Entity en: list){
+	public Character[][] getMap(){
+		Character[][] map = new Character[TileManager.ROW][TileManager.COL];
+		for(Character en: list){
 			map[en.x][en.y] = en;
 		}
 		return map;
 	}
 
-	public void renderSprite() {
-
-	}
-
-	public void renderOutline(ShapeRenderer sr) {
-
-	}
 
 	public void addCharacter(Character character) {
 		list.add(character);
@@ -55,6 +35,16 @@ public class CharacterManager {
 		}
 		
 		tom.renderShape(sr);
+	}
+
+	@Override
+	public void generateList() {
+		
+	}
+
+	@Override
+	public void initMap() {
+		map = getMap();
 	}
 
 }

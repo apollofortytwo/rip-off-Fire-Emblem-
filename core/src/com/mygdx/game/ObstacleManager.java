@@ -2,35 +2,52 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class ObstacleManager {
-	Obstacle[][] obstacleMap;
-	
+public class ObstacleManager extends Manager<Obstacle> {
 	int row, col;
 
 	ObstacleManager() {
+		super();
 		row = TileManager.ROW;
 		col = TileManager.COL;
-		obstacleMap = new Obstacle[row][col];
 	}
 
 	public void addObstacle(int x, int y) {
-		obstacleMap[x][y] = new Obstacle(x,y);
+		list.add(new Obstacle(x,y));
 	}
 
 	public void renderShape(ShapeRenderer sr) {
 		sr.end();
 		sr.begin(ShapeRenderer.ShapeType.Filled);
-
-		for (Obstacle[] x : obstacleMap) {
-			for (Obstacle y : x) {
-				if (y != null) {
-					y.renderShapes(sr);
-				}
-			}
+		
+		
+		for(Obstacle ob: list){
+			ob.renderShapes(sr);
 		}
 
 		sr.end();
 		sr.begin(ShapeRenderer.ShapeType.Line);
+	}
+
+	@Override
+	public void generateList() {
+		
+	}
+
+	@Override
+	public void initMap() {
+		for(Obstacle ob: list){
+			map[ob.x][ob.y] = ob;
+		}
+	}
+
+	@Override
+	public void update() {
+		super.update();
+		
+		map = new Obstacle[row][col];
+		for(Obstacle ob: list){
+			map[ob.x][ob.y] = ob;
+		}
 	}
 
 }

@@ -15,7 +15,7 @@ public class TileOverlay extends Entity {
 	public void render(ShapeRenderer sr) {
 		if (color != Color.CLEAR) {
 			sr.setColor(new Color(color.r, color.g, color.b, 0.5f));
-			sr.rect(wPos.x, wPos.y, bounds.width, bounds.height);
+			sr.rect(wPos.x, wPos.y, Tile.WIDTH, Tile.HEIGHT);
 		}
 
 	}

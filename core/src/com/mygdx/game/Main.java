@@ -47,7 +47,7 @@ public class Main implements ApplicationListener {
 		}
 
 		for (int i = 0; i < 20; i++) {
-			mm.addObstacle(i, 5);
+			mm.addObstacle(0, i);
 		}
 
 		controller = new CameraController(cam);
